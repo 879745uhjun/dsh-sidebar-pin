@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Sidebar pin",
+    "description": "Keeps the sidebar panel rows — Plugins, Token usage, Todos and every later panel — pinned to the top while the workspace and session list scrolls beneath them. The pin button above Settings switches the behaviour off and on; the choice is remembered."
+  }
+}
