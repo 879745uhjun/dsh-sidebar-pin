@@ -25,3 +25,35 @@
 要求侧栏把全局面板行渲染在 `[data-sidebar-scrollport]` 里（随产品提供的
 `@deepseek-ai/dsh-client-ui-sidebar` 就是这样）。开关依赖 `sidebar.footer.action` 席位；
 席位不存在时固定仍然生效，只是没有按钮。
+
+## 与宿主的契约
+
+固定块本质上是一层针对侧栏自身 DOM 的样式，因此下面四条是硬依赖；`test/client.test.mjs`
+把插件这一侧逐条断言住了：
+
+| 依赖 | 宿主改了会怎样 |
+|---|---|
+| `[data-sidebar-scrollport]` 标记滚动视口 | 选择器整体失效：面板行又跟着滚走，但不报错 |
+| 面板行是该视口唯一的直接 `<nav>` | 失去 sticky、底色和分隔线 |
+| 列表区是该视口的直接 `<div>`、位于第 4 栅格行 | `container-type` 落空，列表按整列高度计算，最后几行可能被裁掉 |
+| 宿主基线行高是 `8px max-content 2px max-content` | 固定的 `… 1fr` 模板对不上，差几像素：出现跳动或空条 |
+
+宿主源码在磁盘上时，可以连宿主那侧一起校验：
+`DSH_SIDEBAR_DIR=<@deepseek-ai/dsh-client-ui-sidebar 包目录> npm test`。
+
+## 测试
+
+`npm test`（node:test，零依赖）。测试在 `vm` 沙箱里用假的 `window.__ModuleLoader__`
+和 `document` 加载 `client.js`，断言模块表面：注入的服务、注册的 `sidebar.footer.action`
+行、样式选择器与栅格模板、根标记、中英词典，以及销毁时样式与标记都被移除。
+不渲染 React，也不接触真实侧栏 DOM。
+
+宿主源码解到磁盘上之后，连宿主那侧一起校验（本机已解到工作区）：
+
+```bash
+cd "D:\\Deepseek work\\workplace\\dsh-sidebar-pin"
+DSH_SIDEBAR_DIR="D:\\Deepseek work\\workplace\\sidebar-src\\dsh\\node_modules\\@deepseek-ai\\dsh-client-ui-sidebar" npm test
+```
+
+- 带 `DSH_SIDEBAR_DIR`：8 pass / 0 fail / 0 skipped，宿主契约（栅格模板、滚动视口标记、`> nav` / `> div` 结构）逐条对实际源码命中；
+- 不带：7 pass / 0 fail / 1 skipped（该用例自动跳过并说明原因）。
