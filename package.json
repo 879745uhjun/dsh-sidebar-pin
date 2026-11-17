@@ -50,5 +50,13 @@
         "@deepseek-ai/dsh-client-locale"
       ]
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/879745uhjun/dsh-sidebar-pin.git"
+  },
+  "homepage": "https://github.com/879745uhjun/dsh-sidebar-pin#readme",
+  "bugs": {
+    "url": "https://github.com/879745uhjun/dsh-sidebar-pin/issues"
   }
 }

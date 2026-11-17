@@ -65,3 +65,11 @@ DSH_SIDEBAR_DIR="D:/Deepseek work/workplace/sidebar-src/dsh/node_modules/@deepse
 - with `DSH_SIDEBAR_DIR`: 8 pass / 0 fail / 0 skipped — grid template, scrollport marker and the
   `> nav` / `> div` structure all match the real source;
 - without it: 7 pass / 0 fail / 1 skipped (that case skips itself and says why).
+
+## Install from GitHub
+
+```sh
+dsh plugin --profile desktop add github:879745uhjun/dsh-sidebar-pin
+```
+
+Reload the Web UI page after installing.

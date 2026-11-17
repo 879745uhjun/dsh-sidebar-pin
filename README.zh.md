@@ -57,3 +57,11 @@ DSH_SIDEBAR_DIR="D:\\Deepseek work\\workplace\\sidebar-src\\dsh\\node_modules\\@
 
 - 带 `DSH_SIDEBAR_DIR`：8 pass / 0 fail / 0 skipped，宿主契约（栅格模板、滚动视口标记、`> nav` / `> div` 结构）逐条对实际源码命中；
 - 不带：7 pass / 0 fail / 1 skipped（该用例自动跳过并说明原因）。
+
+## 从 GitHub 安装
+
+```sh
+dsh plugin --profile desktop add github:879745uhjun/dsh-sidebar-pin
+```
+
+装好后刷新 Web 页面。
