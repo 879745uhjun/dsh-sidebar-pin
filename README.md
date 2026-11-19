@@ -64,7 +64,24 @@ DSH_SIDEBAR_DIR="D:/Deepseek work/workplace/sidebar-src/dsh/node_modules/@deepse
 
 - with `DSH_SIDEBAR_DIR`: 8 pass / 0 fail / 0 skipped — grid template, scrollport marker and the
   `> nav` / `> div` structure all match the real source;
-- without it: 7 pass / 0 fail / 1 skipped (that case skips itself and says why).
+- without it: 12 pass / 0 fail / 1 skipped (that case skips itself and says why).
+
+## Self-test
+
+**Plugins** → select this plugin to open its detail page: a **Self-test** section runs
+four read-only checks, and only when **Run self-test** is pressed.
+
+| Check | Passes when | Fails with |
+|---|---|---|
+| Stylesheet injected | the bundle's `<style data-plugin-css="dsh-sidebar-pin/sidebar-pin.css">` is in the document and carries the `[data-sidebar-scrollport]` rule | missing style, or a sheet without that rule |
+| Preference readable | `localStorage['dsh-sidebar-pin:enabled']` is absent (the default applies) or holds `1`/`0` | unreadable storage, or an unrecognized value |
+| Pin state | the `<html data-dsh-sidebar-pin>` flag agrees with the stored preference | flag and preference disagree |
+| Host contract | `[data-sidebar-scrollport] > nav` exists and the rows compute to `position: sticky` | "the host structure may have changed (or the sidebar is collapsed)" |
+
+Each check has a 2 s ceiling, so a hung check fails instead of freezing the section.
+Results live in the section's memory only; **Copy result** puts a Markdown list on the
+clipboard (`- [x] label — Pass` / `- [ ] label — Fail: reason`). Nothing runs on mount
+and no data leaves the page.
 
 ## Install from GitHub
 

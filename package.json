@@ -1,6 +1,6 @@
 {
   "name": "dsh-sidebar-pin",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Pins the sidebar panel rows (Plugins, Token usage, Todos, …) to the top of the sidebar while the session list scrolls, with a pin toggle above Settings.",
   "type": "module",
   "main": "index.js",

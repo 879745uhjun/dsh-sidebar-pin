@@ -56,7 +56,22 @@ DSH_SIDEBAR_DIR="D:\\Deepseek work\\workplace\\sidebar-src\\dsh\\node_modules\\@
 ```
 
 - 带 `DSH_SIDEBAR_DIR`：8 pass / 0 fail / 0 skipped，宿主契约（栅格模板、滚动视口标记、`> nav` / `> div` 结构）逐条对实际源码命中；
-- 不带：7 pass / 0 fail / 1 skipped（该用例自动跳过并说明原因）。
+- 不带：12 pass / 0 fail / 1 skipped（该用例自动跳过并说明原因）。
+
+## 自检
+
+**插件** → 选中本插件进入详情页，里面有一块 **自检**：四项只读检查，**只在点「运行自检」时执行**。
+
+| 检查项 | 通过条件 | 失败时说明 |
+|---|---|---|
+| 样式已注入 | 文档里有本插件的 `<style data-plugin-css="dsh-sidebar-pin/sidebar-pin.css">`，且含 `[data-sidebar-scrollport]` 规则 | 找不到样式，或样式表没有该规则 |
+| 偏好可读 | `localStorage['dsh-sidebar-pin:enabled']` 未设置（走默认）或为 `1`/`0` | 读取失败，或值不可识别 |
+| 固定状态 | `<html data-dsh-sidebar-pin>` 与已存偏好一致 | 两者不一致 |
+| 宿主契约 | `[data-sidebar-scrollport] > nav` 存在，且面板行计算样式为 `position: sticky` | 「宿主结构可能已变（或侧栏处于收起状态）」 |
+
+每条检查 2s 上限，卡住算失败而不是冻住整块。结果只存在组件内存里；**复制结果**把
+Markdown 列表写进剪贴板（`- [x] 标签 — 通过` / `- [ ] 标签 — 失败：原因`）。挂载时不跑任何检查，
+也不把数据发出页面。
 
 ## 从 GitHub 安装
 
